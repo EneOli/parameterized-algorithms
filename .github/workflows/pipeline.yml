@@ -1,0 +1,32 @@
+name: parameterized-algorithms
+on: [push]
+jobs:
+  build-documents:
+    runs-on: ubuntu-latest
+    env:
+      # Edit here with the names of your latex file and directory (can use ".")
+      DIST_DIR: dist
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install TeXlive
+        run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super
+      - name: LaTeX compile
+        run: build/build-documents.sh
+      - name: move
+        run: mkdir -p github_artifacts && mv ${{ env.DIST_DIR }}/ ./github_artifacts/
+      - name: Upload short talk as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: short-talk/presentation.pdf
+          path: ./github_artifacts
+      - name: Upload main talk as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: main-talk/presentation.pdf
+          path: ./github_artifacts
+      - name: Upload text as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: text/text.pdf
+          path: ./github_artifacts
