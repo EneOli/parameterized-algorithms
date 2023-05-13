@@ -17,19 +17,20 @@ jobs:
       - name: Compiling text
         run: build/build-document text
       - name: move
+        working-directory: .
         run: mkdir -p github_artifacts && mv ${{ env.DIST_DIR }}/ ./github_artifacts/
       - name: Upload short talk as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: presentation.pdf
           path: ./github_artifacts/short-talk
       - name: Upload main talk as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: presentation.pdf
           path: ./github_artifacts/main-talk
       - name: Upload text as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: text.pdf
           path: ./github_artifacts/text
