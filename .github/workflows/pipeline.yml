@@ -4,15 +4,18 @@ jobs:
   build-documents:
     runs-on: ubuntu-latest
     env:
-      # Edit here with the names of your latex file and directory (can use ".")
       DIST_DIR: dist
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install TeXlive
         run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super
-      - name: LaTeX compile
-        run: build/build-documents.sh
+      - name: Compiling Short Talk
+        run: build/build-document short-talk
+      - name: Compiling Main Talk
+        run: build/build-document main-talk
+      - name: Compiling text
+        run: build/build-document text
       - name: move
         run: mkdir -p github_artifacts && mv ${{ env.DIST_DIR }}/ ./github_artifacts/
       - name: Upload short talk as artifact
