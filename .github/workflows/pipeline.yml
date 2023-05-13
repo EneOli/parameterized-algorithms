@@ -18,15 +18,15 @@ jobs:
       - name: Upload short talk as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: short-talk/presentation.pdf
-          path: ./github_artifacts
+          name: presentation.pdf
+          path: ./github_artifacts/short-talk
       - name: Upload main talk as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: main-talk/presentation.pdf
-          path: ./github_artifacts
+          name: presentation.pdf
+          path: ./github_artifacts/main-talk
       - name: Upload text as artifact
         uses: actions/upload-artifact@v2
         with:
-          name: text/text.pdf
-          path: ./github_artifacts
+          name: text.pdf
+          path: ./github_artifacts/text
