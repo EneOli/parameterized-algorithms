@@ -1,0 +1,47 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "ERROR: Illegal number of parameters. Expecting exactly one argument that is the document project folder name."
+    exit 1
+fi
+
+PROJECT_FOLDER_NAME=$1
+SCRIPT_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+MAIN_PATH=$(realpath $SCRIPT_PATH/..)
+PROJECT_PATH=$(realpath $SCRIPT_PATH/../$PROJECT_FOLDER_NAME)
+DIST_PATH=$MAIN_PATH/dist/$PROJECT_FOLDER_NAME
+MAIN_FILE_NAME="main.tex"
+MAIN_BUILD_FILE_NAME="main.pdf"
+
+# check if project folder + main file exist
+if [ ! -d $PROJECT_PATH ]; then
+    echo "ERROR: Project folder $PROJECT_PATH does not exist!"
+    exit 1
+fi
+
+if [ ! -f $PROJECT_PATH"/"$MAIN_FILE_NAME ]; then
+    echo "ERROR: Project main file $PROJECT_PATH"/"$MAIN_FILE_NAME does not exist!"
+    exit 1
+fi
+
+# Build document
+
+cd $MAIN_PATH
+rm -rf $DIST_PATH
+mkdir -p $DIST_PATH
+
+cd $PROJECT_PATH
+pdflatex -interaction nonstopmode -output-directory $DIST_PATH $MAIN_FILE_NAME
+bibtex presentation
+pdflatex -interaction nonstopmode -output-directory $DIST_PATH $MAIN_FILE_NAME
+
+# check if pdf file exists
+
+if [ ! -f $DIST_PATH/$MAIN_BUILD_FILE_NAME ]; then
+    echo "ERROR: No pdf file was generated. Check logs."
+    exit 1
+fi
+
+RED='\033[0;32m'
+NC='\033[0m' # No Color
+printf "\n${RED}Done building $PROJECT_FOLDER_NAME ^-^${NC}\n"
