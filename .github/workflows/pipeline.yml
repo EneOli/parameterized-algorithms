@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install TeXlive
-        run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super
+        run: sudo apt-get update && sudo apt-get install texlive-full
       - name: Compiling Short Talk
         run: build/build-document short-talk
       - name: Compiling Main Talk
