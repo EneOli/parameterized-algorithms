@@ -16,25 +16,18 @@ jobs:
         run: build/build-document main-talk
       - name: Compiling text
         run: build/build-document text
-      - name: move
-        working-directory: .
-        run: mkdir -p github_artifacts && mv ${{ env.DIST_DIR }}/ ./github_artifacts/
-      - name: pwd
-        run: pwd
-      - name: ls
-        run: ls -la
       - name: Upload short talk as artifact
         uses: actions/upload-artifact@v3
         with:
           name: presentation.pdf
-          path: ./github_artifacts/short-talk
+          path: ./dist/short-talk
       - name: Upload main talk as artifact
         uses: actions/upload-artifact@v3
         with:
           name: presentation.pdf
-          path: ./github_artifacts/main-talk
+          path: ./dist/main-talk
       - name: Upload text as artifact
         uses: actions/upload-artifact@v3
         with:
           name: text.pdf
-          path: ./github_artifacts/text
+          path: ./dist/text
