@@ -18,6 +18,8 @@ jobs:
         run: build/build-document text
       - name: move
         working-directory: .
+        run: pwd
+        run: ls -la
         run: mkdir -p github_artifacts && mv ${{ env.DIST_DIR }}/ ./github_artifacts/
       - name: Upload short talk as artifact
         uses: actions/upload-artifact@v3
