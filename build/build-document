@@ -11,7 +11,6 @@ MAIN_PATH=$(realpath $SCRIPT_PATH/..)
 PROJECT_PATH=$(realpath $SCRIPT_PATH/../$PROJECT_FOLDER_NAME)
 DIST_PATH=$MAIN_PATH/dist/$PROJECT_FOLDER_NAME
 MAIN_FILE_NAME="main.tex"
-MAIN_BUILD_FILE_NAME="main.pdf"
 
 # check if project folder + main file exist
 if [ ! -d $PROJECT_PATH ]; then
@@ -37,7 +36,7 @@ pdflatex -interaction nonstopmode -output-directory $DIST_PATH --jobname=$PROJEC
 
 # check if pdf file exists
 
-if [ ! -f $DIST_PATH/$MAIN_BUILD_FILE_NAME ]; then
+if [ ! -f $DIST_PATH/$PROJECT_FOLDER_NAME".pdf" ]; then
     echo "ERROR: No pdf file was generated. Check logs."
     exit 1
 fi
