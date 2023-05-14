@@ -31,9 +31,9 @@ rm -rf $DIST_PATH
 mkdir -p $DIST_PATH
 
 cd $PROJECT_PATH
-pdflatex -interaction nonstopmode -output-directory $DIST_PATH $MAIN_FILE_NAME
+pdflatex -interaction nonstopmode -output-directory $DIST_PATH --jobname=$PROJECT_FOLDER_NAME $MAIN_FILE_NAME
 bibtex presentation
-pdflatex -interaction nonstopmode -output-directory $DIST_PATH $MAIN_FILE_NAME
+pdflatex -interaction nonstopmode -output-directory $DIST_PATH --jobname=$PROJECT_FOLDER_NAME $MAIN_FILE_NAME
 
 # check if pdf file exists
 

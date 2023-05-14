@@ -16,18 +16,8 @@ jobs:
         run: build/build-document main-talk
       - name: Compiling text
         run: build/build-document text
-      - name: Upload short talk as artifact
+      - name: Uploading artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: short_talk.pdf
-          path: ./dist/short-talk/main.pdf
-      - name: Upload main talk as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: main_talk.pdf
-          path: ./dist/main-talk/main.pdf
-      - name: Upload text as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: text.pdf
-          path: ./dist/text/main.pdf
+          name: documents.zip
+          path: ./dist/
