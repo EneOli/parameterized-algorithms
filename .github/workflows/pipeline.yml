@@ -19,15 +19,15 @@ jobs:
       - name: Upload short talk as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: presentation.pdf
-          path: ./dist/short-talk
+          name: short_talk.pdf
+          path: ./dist/short-talk/main.pdf
       - name: Upload main talk as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: presentation.pdf
-          path: ./dist/main-talk
+          name: main_talk.pdf
+          path: ./dist/main-talk/main.pdf
       - name: Upload text as artifact
         uses: actions/upload-artifact@v3
         with:
           name: text.pdf
-          path: ./dist/text
+          path: ./dist/text/main.pdf
