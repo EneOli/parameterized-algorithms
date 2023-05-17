@@ -9,5 +9,5 @@
 *.run.xml
 *.snm
 *.synctex.gz
-*.loc
+*.toc
 *.pdf
