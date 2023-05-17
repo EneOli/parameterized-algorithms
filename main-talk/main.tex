@@ -1,25 +1,63 @@
 %% Basierend auf einer Vorlage des SDQ
 %% Siehe https://sdqweb.ipd.kit.edu/wiki/Dokumentvorlagen
 
+
+%% complexity classes
+\renewcommand{\P}{\ensuremath{\mathcal{P}}}
+\newcommand{\NP}{\ensuremath{\mathcal{NP}}}
+\newcommand{\XPT}{\ensuremath{\mathcal{XPT}}}
+\newcommand{\FPT}{\ensuremath{\mathcal{FPT}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+
 \newcommand{\BigO}[1]{\ensuremath{\operatorname{\mathcal{O}}\bigl(#1\bigr)}}
 
-\newcommand{\cloud}[1]{
-    \begin{tikzpicture}
- 
-        \node[cloud,
-            %draw =blue,
-            %text=cyan,
-            fill = gray!10,
-            minimum width = 3cm,
-            minimum height = 2cm] (c) at (0,0) {#1};
-         
-    \end{tikzpicture}
-}
 
 %% Beispiel-Präsentation
 \documentclass[navbaroff]{sdqbeamer} 
 \usepackage{tikz}
- 
+
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{Qbox}{
+enhanced,
+sidebyside,
+righthand width=25pt,
+height from=38pt to \pdfpageheight,
+colback=white,
+valign=center,
+overlay={\node[xshift=-30pt] at (frame.east) 
+    {
+        \includegraphics[height=25pt]{QM.png}
+    };
+  }
+}
+
+\newcommand\questionbox[1]{%
+  \begin{Qbox}
+        #1
+  \end{Qbox}
+}
+
+\newtcolorbox{Abox}{
+enhanced,
+sidebyside,
+righthand width=25pt,
+height from=38pt to \pdfpageheight,
+colback=white,
+valign=center,
+overlay={\node[xshift=-30pt] at (frame.east) 
+    {
+        \includegraphics[height=30pt]{AW.png}
+    };
+  }
+}
+
+\newcommand\answerbox[1]{%
+  \begin{Abox}
+        #1
+  \end{Abox}
+}
+
 %% Titelbild
 \titleimage{banner_2020_kit}
 
@@ -33,70 +71,119 @@
 % Beginn der Präsentation
 
 \title[Parametrisierte Algorithmen II]{Parametrisierte Algorithmen II}
-\subtitle{Kurzvortrag} 
+\subtitle{Hauptvortrag} 
 \author[Oliver Enes]{Oliver Enes}
 
-\date[08.\,05.\,2023]{08. Mai 2023}
+\date[05.\,06.\,2023]{05. Juni 2023}
 
 % Literatur 
  
 \usepackage[citestyle=authoryear,bibstyle=numeric,hyperref,backend=biber]{biblatex}
-\addbibresource{presentation.bib}
-\bibhang1em
+\usepackage{tikz}
 
 \tikzstyle{every node}=[circle, draw, fill=black!50, inner sep=0pt, minimum width=4pt]
 \usetikzlibrary{graphs,graphs.standard}
 \usetikzlibrary{calc,shapes.callouts,shapes.arrows}
 
-\tikzset{
-  wavy/.style = {
-     decorate,
-     decoration = {snake, amplitude=1.5mm, segment length=8mm}
-  },
-  main node/.style={circle,fill=gray!25,draw,font=\sffamily\Large\bfseries}
-}
+
+\addbibresource{presentation.bib}
+\bibhang1em
 
 \begin{document}
  
 %Titelseite
 \KITtitleframe
 
-\begin{frame}{Ausgangssituation: $\mathcal{NP}$-schwere Probleme... überall $\mathcal{NP}$-schwere Probleme}
-        \centering
-        \includegraphics[width=5cm]{logos/np-everywhere.jpg}
+\begin{frame}[t]{Wofür parametrisierte Algorithmen?}
     
-    \visible<2->{
-        \begin{questionblock}{Frage}
-        Ist ein $\mathcal{NP}$-schweres Problem in der Praxis nicht effizient/schnell lösbar?
-        \end{questionblock}
-    }
-
-    \visible<3->{
-        \begin{brownblock}{Antwort}
-            In der Praxis sind viele Instanzen $\mathcal{NP}$-schwerer Probleme effizient lösbar, weil die Instanzen \textbf{gutartig} sind!
-        \end{brownblock}
-    }
-    
-\end{frame}
-
-\begin{frame}{Parametrisierte Algorithmen}
-
     \begin{itemize}
-        \item Die Laufzeit eines Algorithmus wird zusätzlich zur Eingabegröße in einem \textbf{weiteren Parameter k} betrachtet.
-        \item Mittels k soll die \enquote{Schwierigkeit der konkreten Probleminstanz} formalisiert werden.
-        \item In diesem Vortrag: Fokus auf strukturelle Parametrisierung
+        \item Viele Probleme sind \NP-schwer
     \end{itemize}
 
-    \vspace{1cm}
-    \centering
     \visible<2->{
-        \textbf{\large{In welchem Teil einer Probleminstanz liegt die Schwierigkeit?}}
+        \vspace{20pt}
+        \questionbox{
+            \centering
+            \textbf{Ist damit jede Instzanz eines \NP-schweren Problems nicht effizient lösbar?}
+        }
+    }
+    
+    \visible<3->{
+        \answerbox{
+            \centering
+            \textbf{
+                In der Praxis sind viele Instanzen \NP-schwerer Probleme effizient lösbar, weil die Instanzen \textcolor{blue}{gutartig} sind!
+            }
+        }
+    }
+
+    \visible<4->{
+        \vspace{20pt}
+        \centering
+        \textbf{Parametrisierte Algorithmen formalisieren Gutartigkeit}
+    }
+
+\end{frame}
+
+\begin{frame}{Parametrisiertes Problem}
+
+    \begin{blueblock}{Parametrisiertes Problem}
+        Ein parametrisiertes Problem ist eine Sprache $ L \subseteq (\Sigma^*, \textcolor{blue}{\N}) $ wobei $\Sigma$ ein endliches Alphabet.
+        \\
+        Die zweite Komponente heißt \textcolor{blue}{Parameter}.
+    \end{blueblock}
+
+    
+    \visible<2-3>{
+        \large{\textbf{Beispiele:}}
+            \begin{itemize}
+                \item $k$-Vertex-Cover mit Parameter $k$
+                \item Subset Sum mit Parameter Summe aller Elemente
+                \item 3Color mit Parameter größte Clique
+                \item k-Vertex-Cover mit Parameter $k = min_{v \in V(G)}{deg(v)}$
+            \end{itemize}
+    }
+
+    \visible<3>{
+        \vspace{5pt}
+        \large{\textbf{Anmerkungen:}}
+        \begin{itemize}
+            \item Parameter i.A. nicht eindeutig / frei wählbar
+        \end{itemize}
     }
 \end{frame}
 
-\begin{frame}{Problemkerne}
+\begin{frame}{Parametrisierte Komplexität}
+    \begin{blueblock}{Problemklasse \FPT}
+        Ein parametrisiertes \textbf{Entscheidungsproblem} P heißt \FPT  (Fixed-Parameter-Tractable),
+        wenn ein Algorithmus existiert, der Probleminstanzen (x, k) in \BigO{\textcolor{blue}{f(k)} \cdot \textcolor{red}{|x|^c}} löst, wobei $ c \in \N $ und $f$ beliebige berechenbare Funktion.
+        
+        \vspace{10pt}
+        Die Menge aller solcher Probleme bildet die Problemklasse \FPT
+    \end{blueblock}  
+    
+    \visible<2-3>{
+        \vspace{5pt}
+        \large{Beispiele:}
+        \begin{itemize}
+            \item \BigO{\textcolor{blue}{(43k^2+k)} \cdot \textcolor{red}{|x|^2}}
+            \item \BigO{\textcolor{blue}{2^k} \cdot \textcolor{red}{(|x|^3+42|x|)}}
+            \item \BigO{\textcolor{red}{|x|^{123}+12}}
+            \item \BigO{\textcolor{blue}{\varphi(k, k - 5, k - \sqrt{k})} \cdot \textcolor{red}{\log(|x + 1|)}} wobei $\varphi$ die Ackermann-Funktion.
+        \end{itemize}
+    }
 
-    \begin{blueblock}{Problem Vertex Cover}
+    \visible<3>{
+        \begin{itemize}
+            \item \textbf{Beobachtung:} Für festes k ist die Laufzeit polynomiell in der Eingabegröße.
+        \end{itemize}
+    }
+
+\end{frame}
+
+
+\begin{frame}{Ein \NP-schweres Problem: Vertex-Cover}
+    \begin{blueblock}{Problem k-Vertex-Cover}
         \textbf{Eingabe}: Graph $G = (V, E)$, $k \in \mathbb{N}$
         \\
         \vspace{0.075cm}
@@ -105,105 +192,39 @@
         \vspace{0.075cm}
         \textbf{Frage}: Existiert Menge $M \subseteq V$, sodass $|M| \leq k$ und jede Kante zu min. einem Knoten in $M$ adjazent ist?
     \end{blueblock}
-
-    \begin{columns}
-    \begin{column}{0.5\linewidth}
-        \centering
-        \visible<3->{
-        \begin{tikzpicture}
-        \tikzset{enclosed/.style={draw, circle, inner sep=0pt, minimum size=.1cm, fill=black}}
-
-      \node[enclosed] (E) at (0.75,3.25) {};
-      \node[enclosed] (H) at (3,4) {};
-      \node[enclosed] (B) at (4.5,2) {};
-      \node[enclosed] (M) at (3,0) {};
-      \node[enclosed] (L) at (0.75,0.75) {};
-
-      \node<1-3>[enclosed] (F) at (0.25,2) {};
-      \node<4->[enclosed, color=red] (F) at (0.25,2) {};
-      
-      \node<1-3>[enclosed] (G) at (4.5,1) {};
-      \node<4->[enclosed, color=red] (G) at (4.5,1) {};
-      
-      \node<1-3>[enclosed] (A) at (2.5,2) {};
-      \node<4->[enclosed, color=red] (A) at (2.5,2) {};
-      
-      \node<1-3>[enclosed] (C) at (4.5,3.5) {};
-      \node<4->[enclosed, color=red] (C) at (4.5,3.5) {};
-
-          \draw[bend] (E) -- (H);
-          \draw (H) -- (B);
-          \draw (B) -- (M);
-          \draw (E) -- (L);
-          \draw (E) -- (B);
-          \draw (E) -- (M);
-          \draw (L) -- (H);
-          \draw (L) -- (B);
-          \draw (H) -- (M);
-        \end{tikzpicture}
-        }
-
-    \centering
-    \visible<3->{\textbf{hier $k = 3$}}
-    \end{column}
-    \begin{column}{0.45\linewidth}
-      \visible<2->{
-          \begin{greenblock}{Satz}
-            Vertex Cover ist $\mathcal{NP}$-vollständig.
-          \end{greenblock}
-      }
-      \visible<4->{
-          \begin{itemize}
-              \item Trotzdem sehen wir, dass wir isolierte Knoten ignorieren können.
-              \item Die \enquote{Schwierigkeit} des Problems muss also in der hier größten Zusammenhangskomponente liegen.
-          \end{itemize}
-      }
-    \end{column}
-  \end{columns}
     
-\end{frame}
+    \begin{tikzpicture}
+        %\tikzset{enclosed/.style={draw, circle, inner sep=0pt, minimum size=.1cm, fill=black}}
 
-\begin{frame}{Der Kern allen Übels}
-    \begin{itemize}
-        \item Wir haben die Probleminstanz verkleinert, indem wir \enquote{einfache} Teile der Instanz entfernt haben. 
+  \node (E) at (0.75,3.25) {};
+  \node (H) at (3,4) {};
+  \node (B) at (4.5,2) {};
+  \node (M) at (3,0) {};
+  \node (L) at (0.75,0.75) {};
 
-        \item Reicht es, den \enquote{schweren} Teil der Instanz zu lösen, um die Instanz selbst zu lösen?
+  \node<1-3> (F) at (0.25,2) {};
+  \node<4->[color=red] (F) at (0.25,2) {};
+  
+  \node<1-3> (G) at (4.5,1) {};
+  \node<4->[color=red] (G) at (4.5,1) {};
+  
+  \node<1-3> (A) at (2.5,2) {};
+  \node<4->[color=red] (A) at (2.5,2) {};
+  
+  \node<1-3> (C) at (4.5,3.5) {};
+  \node<4->[color=red] (C) at (4.5,3.5) {};
 
-        \item Können wir das bei jedem (NP-schweren) Problem machen?
-    \end{itemize}
-\end{frame}
+      \draw[bend] (E) -- (H);
+      \draw (H) -- (B);
+      \draw (B) -- (M);
+      \draw (E) -- (L);
+      \draw (E) -- (B);
+      \draw (E) -- (M);
+      \draw (L) -- (H);
+      \draw (L) -- (B);
+      \draw (H) -- (M);
+    \end{tikzpicture}
 
-\begin{frame}[t]{Neue Problemklassen}
-
-    \visible<2->{
-        \begin{blueblock}{Problemklasse FPT}
-            Die Menge aller Entscheidungsprobleme der Form $(x,k) \in \Sigma^{*} \times \mathbb{N}$ wobei k der Parameter und die Instanz in \BigO{\textcolor{red}{f(k)} \cdot \textcolor{blue}{|x|^c}}, $c \in \mathbb{N}$ lösbar ist.
-        \end{blueblock}
-    }
-
-    \centering
-    \visible<3->{
-        \begin{center}
-            \textbf{Ist jedes parametrisierte Problem FPT?}
-            \\
-            \visible<4->{(Spoiler: nein)}
-        \end{center}
-    }
-    \visible<5->{
-        \centering
-        \textbf{Wie zeigen wir, dass ein Problem nicht FPT ist?}
-        \\
-        \\
-        \visible<6->{
-            Parametrisierte polynomielle Reduktion (W[1]-Hardness)
-        }
-        \\
-        \\
-        \vspace{0.3cm}
-        \visible<7->{
-            Exponential Time Hypothesis (ETH) und Strong Exponential Time Hypothesis (SETH) ermöglichen enge untere Schranken für die Laufzeit von Algorithmen.
-        }
-    }
 \end{frame}
 
 \end{document} 
