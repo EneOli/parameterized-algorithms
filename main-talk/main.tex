@@ -733,4 +733,24 @@ overlay={\node[xshift=-30pt] at (frame.east)
     
 \end{frame}
 
+\begin{frame}[t]{Parametrisierte Reduktionen}
+    \begin{blueblock}{Parametrisierte Reduktion}
+        Seien $P_1, P_2 \in \Sigma^* \times \N$ zwei parametrisierte Probleme.
+        \\
+        Eine Funktion $f: \Sigma^* \times \N \rightarrow \Sigma^* \times \N$ heißt genau dann \blue{Parametrisierte Reduktion von $P_1$ nach $P_2$} wenn
+        für $(x, k) \in \Sigma^* \times \N$ gilt:
+        \begin{itemize}
+            \item $I:=(x, k) \in P_1 \iff (x', k') := f(I) \in P_2$
+            \item $k' \leq g(k)$ für beliebige berechenbare Funktion $g: \N \rightarrow \N$
+            \item $f$ ist berechenbar und die Laufzeit ist in FPT.
+        \end{itemize}
+        \vspace{10pt}
+        Wir schreiben $P_1 \prec_{FPT} P_2$.
+    \end{blueblock}
+\end{frame}
+
+\begin{frame}{Parametrisierte Reduktionen - Beispiel}
+    
+\end{frame}
+
 \end{document} 
