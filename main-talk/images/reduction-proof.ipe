@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70218" creator="Ipe 7.2.26">
-<info created="D:20230520030013" modified="D:20230528154357"/>
+<info created="D:20230530001806" modified="D:20230530001806"/>
+<preamble>\usepackage[scaled]{helvet}
+\usepackage[T1]{fontenc}
+\renewcommand\familydefault{\sfdefault}</preamble>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -313,85 +316,68 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<use layer="alpha" name="mark/disk(sx)" pos="336 752" size="normal" stroke="black"/>
-<use matrix="1 0 0 1 0 16" name="mark/disk(sx)" pos="272 688" size="normal" stroke="black"/>
-<path stroke="lightgray">
-304 736 m
-272 752 l
+<path layer="alpha" matrix="1 0 0 1 -1.33512 -4.67292" stroke="darkgray" fill="orange" opacity="50%" stroke-opacity="opaque">
+192 688
+176 672
+224 656
+224 688
+208 688 u
 </path>
-<path stroke="black">
-272 752 m
-336 752 l
+<text matrix="1 0 0 1 -33.3351 -20.6729" transformations="translations" pos="224 688" stroke="black" type="label" width="29.401" height="3.741" depth="1.24" valign="baseline" size="5" style="math">I = (x, k)</text>
+<path stroke="black" arrow="normal/normal" opacity="50%" stroke-opacity="opaque">
+224 672 m
+256 672
+288 656
+319.013 648.191 c
 </path>
-<path stroke="lightgray">
-336 752 m
-304 736 l
+<path stroke="black" arrow="normal/normal" opacity="50%" stroke-opacity="opaque">
+224 672 m
+256 688
+320 688 c
 </path>
-<path stroke="lightgray">
-304 736 m
-336 704 l
+<text matrix="1 0 0 1 2.67024 4.67292" transformations="translations" pos="256 688" stroke="black" type="label" width="43.711" height="7.473" depth="2.49" valign="baseline" style="math">|x| &gt; f(k)</text>
+<text matrix="1 0 0 1 1.1126 -43.126" transformations="translations" pos="256 688" stroke="black" type="label" width="43.711" height="7.473" depth="2.49" valign="baseline" style="math">|x| \leq f(k)</text>
+<path matrix="1 0 0 1 -15.1314 -0.22252" stroke="black" fill="lightyellow">
+336 704 m
+336 672 l
+368 672 l
+368 704 l
+h
 </path>
-<path stroke="lightgray">
-304 736 m
-304 704 l
+<text matrix="1 0 0 1 -22.252 -5.563" transformations="translations" pos="352 688" stroke="black" type="label" width="11.455" height="9.803" depth="0" valign="baseline" size="15" style="math">\mathcal{A}</text>
+<path matrix="1 0 0 1 133.764 -34.4477" stroke="darkgray" fill="orange" opacity="50%" stroke-opacity="opaque">
+192 688
+176 672
+224 656
+224 688
+208 688 u
 </path>
-<path stroke="lightgray">
-304 736 m
-272 704 l
+<text matrix="1 0 0 1 101.764 -50.4477" transformations="translations" pos="224 688" stroke="black" type="label" width="29.401" height="3.741" depth="1.24" valign="baseline" size="5" style="math">I = (x, k)</text>
+<path matrix="1 0 0 1 -15.1314 -0.22252" stroke="black" arrow="normal/normal">
+368 688 m
+384 672
+432 672 c
 </path>
-<path stroke="black">
-272 704 m
-272 752 l
+<path matrix="1 0 0 1 -15.1314 -0.22252" stroke="black" arrow="normal/normal">
+368 688 m
+384 704
+432 704 c
 </path>
-<path stroke="black">
-272 752 m
-256 736 l
+<path matrix="1 0 0 1 -23.5871 -2.89276" stroke="darkgray" fill="lightgreen" opacity="50%" stroke-opacity="opaque">
+436.797 723.502
+448 688
+483.733 706.89 u
 </path>
-<path stroke="lightgray">
-256 736 m
-224 704 l
+<text matrix="1 0 0 1 -30.4852 -5.563" transformations="translations" pos="454.973 706.936" stroke="black" type="label" width="16.708" height="6.808" depth="2.85" valign="baseline" style="math">I_{yes}</text>
+<path matrix="1 0 0 1 -25.1448 0" stroke="darkgray" fill="red" opacity="50%" stroke-opacity="opaque">
+442.29 680.234
+444.737 658.649
+485.903 665.102
+467.434 682.459 u
 </path>
-<path stroke="lightgray">
-224 704 m
-256 720 l
-</path>
-<path stroke="lightgray">
-272 704 m
-224 704 l
-</path>
-<use name="mark/disk(sx)" pos="384 704" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="352 720" size="normal" stroke="black"/>
-<path stroke="black">
-336 752 m
-352 736 l
-</path>
-<path stroke="black">
-352 736 m
-384 704 l
-</path>
-<path stroke="black">
-352 736 m
-352 720 l
-</path>
-<path stroke="lightgray">
-256 688 m
-224 704 l
-</path>
-<use name="mark/disk(sx)" pos="336 736" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="368 704" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="288 688" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="320 688" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="272 704" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="336 752" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="336 704" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="304 704" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="256 736" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="256 688" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="256 720" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="272 752" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="304 736" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="352 736" size="normal" stroke="black"/>
-<use name="mark/disk(sx)" pos="224 704" size="normal" stroke="lightgray"/>
-<use name="mark/disk(sx)" pos="224 736" size="normal" stroke="lightgray"/>
+<text matrix="1 0 0 1 -28.0375 -5.78552" transformations="translations" pos="455.418 673.113" stroke="black" type="label" width="13.735" height="6.812" depth="1.49" valign="baseline" style="math">I_{no}</text>
+<text matrix="1 0 0 1 -8.45576 -7.7882" transformations="translations" pos="373.976 711.832" stroke="black" type="label" width="30.429" height="4.726" depth="0.13" valign="baseline" size="7">Ja-Instanz</text>
+<text matrix="1 0 0 1 -6.67574 -47.619" transformations="translations" pos="373.976 711.832" stroke="black" type="label" width="37.186" height="4.726" depth="0.07" valign="baseline" size="7">Nein-Instanz</text>
+<text matrix="0.502028 0 0 0.881562 153.442 108.05" transformations="translations" pos="325.745 678.104" stroke="black" type="label" width="42.652" height="5.475" depth="1.24" valign="baseline" size="2" style="math">\mathcal{O}(\textcolor{blue}{f(k)} \cdot \textcolor{red}{|x|^k})</text>
 </page>
 </ipe>
