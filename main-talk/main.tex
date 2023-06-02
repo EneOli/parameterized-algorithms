@@ -8,7 +8,10 @@
 \newcommand{\ParaNP}{\ensuremath{para-\mathcal{NP}}\xspace}
 \newcommand{\XP}{\ensuremath{\mathcal{XP}}\xspace}
 \newcommand{\FPT}{\ensuremath{\mathcal{FPT}}\xspace}
+\newcommand{\W}{\ensuremath{\mathcal{W}}\xspace}
 \newcommand{\N}{\ensuremath{\mathbb{N}}\xspace}
+
+\newcommand{\fptreduce}{\ensuremath{\propto_{FPT}}}
 
 \newcommand{\BigO}[1]{\ensuremath{\operatorname{\mathcal{O}}\bigl(#1\bigr)}\xspace}
 \newcommand{\blue}[1]{\textcolor{kit-blue100}{#1}\xspace}
@@ -21,7 +24,7 @@
 \usepackage{tikz}
 \usepackage{xspace}
 \usepackage{wasysym}
-
+\usepackage{caption, copyrightbox}
 \usepackage[most]{tcolorbox}
 
 \renewcommand{\note}[1]{
@@ -196,10 +199,10 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \vspace{5pt}
         \large{Beispiele:}
         \begin{itemize}
-            \item \BigO{\blue{(43k^2+k)} \cdot \textcolor{red}{|x|^2}}
-            \item \BigO{\blue{2^k} \cdot \textcolor{red}{(|x|^3+42|x|)}}
-            \item \BigO{\textcolor{kit-red100}{|x|^{123}+12}}
-            \item \BigO{\blue{\varphi(k, k - 5, k - \sqrt{k})} \cdot \textcolor{kit-red100}{\log(|x + 1|)}} wobei $\varphi$ die Ackermann-Funktion ist.
+            \item \BigO{\blue{(43k^2+k)} \cdot \red{|x|^2}}
+            \item \BigO{\blue{2^k} \cdot \red{(|x|^3+42|x|)}}
+            \item \BigO{\red{|x|^{123}+12}}
+            \item \BigO{\blue{\varphi(k, k - 5, k - \sqrt{k})} \cdot \red{\log(|x + 1|)}} wobei $\varphi$ die Ackermann-Funktion ist.
         \end{itemize}
     }
 
@@ -212,11 +215,11 @@ overlay={\node[xshift=-30pt] at (frame.east)
 
 \begin{frame}[t]{Ein \NP-schweres Problem: \textsc{Vertex-Cover}}
     \begin{redblock}{Problem \textsc{k-Vertex-Cover}}
-            \textbf{Eingabe}: Graph $G = (V, E)$, $k \in \mathbb{N}$
-            \\
-            \textbf{Parameter}: Lösungsgröße $k$
-            \\
-            \textbf{Frage}: Existiert Menge $M \subseteq V$, sodass $|M| \leq k$ und jede Kante zu mindestesns einem Knoten in $M$ adjazent ist?
+        \begin{tabular}{r l}
+            \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$\\
+            \textbf{Parameter}: & Lösungsgröße $k$ \\
+            \textbf{Frage}: & Existiert Menge $M \subseteq V$, sodass $|M| \leq k$ und jede Kante zu mindestesns einem Knoten \\ & in $M$ adjazent ist?
+        \end{tabular}
     \end{redblock}%
     \begin{overlayarea}{\textwidth}{\textheight}
         \onslide*<2-3>{%
@@ -477,19 +480,11 @@ overlay={\node[xshift=-30pt] at (frame.east)
                 \raggedright
                 \vspace{5pt}
                 \begin{overlayarea}{1\textwidth}{1\textheight}
-                    \onslide*<7>{
-                        \questionbox{\centering Wo haben wir die \\2. Reduktionsregel gebraucht?}
-                    }
-                
-                    \onslide*<8>{
-                        \answerbox{\centering Die 3. Regel setzt die 2. voraus, damit jeder Knoten maximal $k$ Kanten hat.}
-                    }
-                
-                    \onslide*<9->{
+                    \onslide*<7->{
                         \centering
                         \begin{itemize}
                             \item[] \textbf{Die Problemgröße ist nur noch vom Parameter abhängig!}
-                            \item<10->[] \textbf{Alle Reduktionen sind in polynomieller Zeit durchführbar!}
+                            \item<8->[] \textbf{Alle Reduktionen sind in polynomieller Zeit durchführbar!}
                         \end{itemize}
                     }
                 \end{overlayarea}
@@ -567,7 +562,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
     }
     \only<2->{
         \begin{greenblock}{\FPT \& Problemkerne}
-            Ein Problem besitzt genau dann einen Problemkern wenn es in \FPT ist.
+            Ein entscheidbares parametrisiertes Problem besitzt genau dann einen Problemkern wenn es in \FPT ist.
         \end{greenblock}
     }
     \visible<3->{
@@ -578,11 +573,11 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \onslide*<4-9>{
             $\Rightarrow$:
             \begin{itemize}
-                \item<5-> Sei $(x, k)$ Probleminstanz eines parametrisierten Problems P\\ mit Problemkernreduktion $\Phi$.
-                \item<6-> Es ex. Algorithmus $\mathcal{A}$ der in polynomieller Zeit eine Lösung für P überprüfen kann.
+                \item<5-> Sei $(x, k)$ Probleminstanz eines entscheidbaren \\parametrisierten Problems P mit Problemkernreduktion $\Phi$.
+                \item<6-> Es ex. Algorithmus $\mathcal{A}$ der eine Lösung für P entscheiden kann.
                 \item<7-> Erzeuge Problemkern $(x', k') := \Phi(x, k) $.
-                \item<8-> Löse $(x', k')$ mittels $\mathcal{A}$, indem alle mögichen Lösungen systematisch probiert werden.
-                \item<9-> Damit ist die Laufzeit in \BigO{\qquad \underbrace{p(|x| + k)}_{\textrm{Laufzeit von $\Phi$}} \qquad + \underbrace{\textcolor{kit-blue100}{f(k)}}_{\textrm{Alle Löungen probieren}} \cdot \underbrace{\textcolor{kit-red100}{|x|^c}}_{\textrm{Lösung überprüfen}}} $ = $ \BigO{\textcolor{kit-blue100}{f(k)} \cdot \textcolor{kit-red100}{|x|^c}},\\ wobei $f$ die Laufzeit für das Auflisten aller Lösungsvorschläge und $p$ beliebiges Polynom ist.
+                \item<8-> Löse $(x', k')$ mittels $\mathcal{A}$, indem alle möglichen Lösungen systematisch probiert werden.
+                \item<9-> Damit ist die Laufzeit in \BigO{\qquad \underbrace{(|x| + k)^c}_{\textrm{Laufzeit von $\Phi$}} \qquad + \underbrace{\textcolor{kit-blue100}{f(k)}}_{\textrm{Alle Löungen probieren}}} $ \preceq $ \BigO{\textcolor{kit-blue100}{f(k)} \cdot \textcolor{kit-red100}{|x|^c}}.
             \end{itemize}
         }
         \onslide*<10-19>{
@@ -594,11 +589,11 @@ overlay={\node[xshift=-30pt] at (frame.east)
             \\
             \vspace{8pt}
             \only<12-17>{
-                \textbf{Fall 1:} $|x| > f(x)$
+                \textbf{Fall 1:} $|x| > f(k)$
                 \\
                 Konstruiere Problemkernreduktion $\Phi$ wie folgt:
                 \begin{itemize}
-                    \item<13-> Es exisitiert ein Algoritmus $\mathcal{A}$ der P in \BigO{\textcolor{kit-blue100}{f(k)} \cdot \textcolor{kit-red100}{|x|^c}} löst.
+                    \item<13-> Es existiert ein Algoritmus $\mathcal{A}$ der P in \BigO{\textcolor{kit-blue100}{f(k)} \cdot \textcolor{kit-red100}{|x|^c}} löst.
                     \item<14-> Lasse $\mathcal{A}$ die Instanz lösen.
                     \item<15-> Ist $(x, k)$ eine Ja-Instanz, gib eine triviale Ja-Instanz zurück.
                     \item<16-> Andernfalls gib eine triviale Nein-Instanz zurück.
@@ -606,7 +601,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
                 \end{itemize}
                 }
                 \only<18->{
-                    \textbf{Fall 2:} $|x| \leq f(x)$
+                    \textbf{Fall 2:} $|x| \leq f(k)$
                     \\
                     \visible<19->{
                         Dann ist bereits $|x| \leq f(k)$. Gib $(x, k)$ zurück.
@@ -638,30 +633,181 @@ overlay={\node[xshift=-30pt] at (frame.east)
     }
 \end{frame}
 
-\begin{frame}[t]{Ein Problem das nicht in \FPT ist}
-    \begin{redblock}{Problem \textsc{k-Color}}
-        \textbf{Eingabe}: Graph $G = (V, E)$, $k \in \mathbb{N}$
-            \\
-            \textbf{Parameter}: verfügbarbe Anzahl Farben $k$
-            \\
-            \textbf{Frage}: Existiert Färbung $c: V \rightarrow \N$ mit $|c(V)| \leq k$ und $(u, v) \in E \Rightarrow c(u) \neq c(v)$?
+\begin{frame}
+    \centering
+    \centering
+    \begin{overlayarea}{1\textwidth}{1\textheight}
+        \centering
+        \begin{columns}
+            \centering
+            \begin{column}{0.5\textwidth}
+                \centering
+                \includegraphics<1->[width=160pt]{images/cartoon1.png}
+            \end{column}
+            \centering
+            \begin{column}{0.5\textwidth}
+                \centering
+                \includegraphics<2->[width=200pt]{images/cartoon2.png}
+            \end{column}                
+        \end{columns}
+        \vspace{10pt}
+        \includegraphics<3->[width=220pt]{images/cartoon3.png}
+    \end{overlayarea}    
+\end{frame}
+
+\begin{frame}[t]{Parametrisierte Reduktionen}
+    \begin{blueblock}{Parametrisierte Reduktion}
+        Seien $P_1, P_2 \in \Sigma^* \times \N$ zwei parametrisierte Probleme.
+        \\
+        Eine Funktion $f: \Sigma^* \times \N \rightarrow \Sigma^* \times \N$ heißt genau dann \blue{Parametrisierte Reduktion von $P_1$ nach $P_2$} wenn
+        für $(x, k) \in \Sigma^* \times \N$ gilt:
+        \begin{itemize}
+            \item $I:=(x, k) \in P_1 \iff (x', k') := f(I) \in P_2$
+            \item $k' \leq g(k)$ für beliebige berechenbare Funktion $g: \N \rightarrow \N$
+            \item $f$ ist berechenbar und die Laufzeit ist in FPT.
+        \end{itemize}
+        \vspace{10pt}
+        Wir schreiben $P_1 \propto_{FPT} P_2$.
+    \end{blueblock}
+\end{frame}
+
+\begin{frame}[t]{Ein Problem das vermutlich nicht in \FPT ist}
+    \vspace{-5pt}
+    \visible<2->{
+        \begin{redblock}{Problem \textsc{k-Clique}}
+            \begin{tabular}{r l}
+                \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$\\
+                \textbf{Parameter}: & Lösungsgröße $k$ der Clique.\\
+                \textbf{Frage}: & Existiert Menge $M \subseteq V$, sodass $|M| = k$ und für alle $u,v \in M$ gilt: $\{u, v\} \in E$?
+            \end{tabular}
+        \end{redblock}
+    }
+
+    \vspace{-10pt}
+    \begin{overlayarea}{1\textwidth}{1\textheight}
+        \begin{columns}
+            \begin{column}{0.65\textwidth}
+                \begin{itemize}
+                    \item<3-> Es ist kein Algorithmus bekannt, der \textsc{k-Clique}
+                    in FPT-Zeit löst.
+                    \item<4-> Wir vermuten, dass \textsc{k-Clique} \enquote{parametrisiert schwerer} als FPT-Probleme wie z.B. \textsc{k-Vertex-Cover} ist.
+                    \item<5-> Wir bezeichnen \textsc{k-Clique} als \blue{\W[1]-hart} und \textbf{wir} definieren:
+                \end{itemize}
+                \vspace{-5pt}
+                \onslide<6->{
+                    \begin{blueblock}{Problemklasse \W[1] \& \W[1]-Härte}
+                        Ein parametrisiertes Problem P ist genau dann in der \blue{Problemklasse \\\W[1]}, wenn es parametrisiert reduzierbar auf \textsc{k-Clique ist.}
+                        \vspace{8pt}
+                        \\
+                        $P$ ist \blue{$\W[1]$-hart} gdw. für \only<6>{alle $P' \in \W[1]$} \only<7->{\red{ein \W[1]-hartes $P'$}} gilt: $P' \propto_{FPT} P$.
+                    \end{blueblock}
+                }
+            \end{column}
+            \begin{column}{0.3\textwidth}
+                \onslide*<2-7>{
+                    \begin{figure}
+                        \includegraphics{images/clique.eps}
+                        \\
+                        (\textbf{hier:} $k = 4$)
+                    \end{figure}
+                }
+                \onslide*<8->{
+                    \textbf{\red{Vorsicht:}}
+                    \\Die Definition von \\\W[1] und \W[1]-Härte
+                    ist in der Literatur anders, aber \textbf{äquivalent}!
+                    \\
+                    (statt \textsc{k-Clique} \textsc{Weighted Circuit Satisfiability})
+                }
+            \end{column}
+        \end{columns}
+    \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Beispiel: \textsc{k-Clique} $\propto_{FPT}$ \textsc{k-Independent-Set}}
+    \begin{redblock}{Problem \textsc{k-Independent-Set}}
+        \begin{tabular}{r l}
+            \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$ \\
+            \textbf{Parameter}: & Lösungsgröße $k$ \\
+            \textbf{Frage}: & Existiert Menge $M \subseteq V$, sodass $|M| = k$ und für alle $u,v \in M$ gilt: $\{u, v\} \notin E$?
+        \end{tabular}
     \end{redblock}
+
+    \vspace{10pt}
+    \only<1-3>{
+        \begin{figure}
+            \includegraphics{images/independent-set.eps}
+        \end{figure}
+    }
+
+    \tikz[overlay, remember picture] \node[xshift=29mm, yshift=-53mm] at (current page.north east) {
+        \begin{minipage}{520pt}
+            \note{
+                \raggedright
+                \small
+                \setlength\leftmargini{15pt}
+                \begin{itemize}
+                    \item $I \in P_1 \iff f(I) \in P_2$
+                    \item $k' \leq g(k)$ für beliebige berechenbare Funktion $g: \N \rightarrow \N$
+                    \item $f$ berechenbar und Laufzeit in FPT.
+                \end{itemize}
+            }
+        \end{minipage}
+    };
+
+    \vspace{10pt}
 
     \begin{overlayarea}{1\textwidth}{1\textheight}
         \onslide*<2>{
-            \centering
-            \begin{figure}
-                \includegraphics{images/color-1.eps}
-            \end{figure}
-            (\textbf{hier:} $k = 3$)
+            \questionbox{Wie lässt sich \textsc{k-Clique} auf \textsc{k-Independent-Set} parametrisiert reduzieren?}
         }
         \onslide*<3>{
-            \centering
-            \begin{figure}
-                \includegraphics{images/color-2.eps}
-            \end{figure}
-            (\textbf{hier:} $k = 3$)
+            \answerbox{Betrachte den Komplementärgraph $G^c$}
         }
+        \onslide*<4->{
+            \vspace{-30pt}
+            \textbf{Zu zeigen:} \textsc{k-Clique} $\propto_{FPT}$ \textsc{k-Independent-Set}
+            \begin{itemize}
+                \item<5-> Sei $I := (x, k)$ Ja-Instanz von \textsc{k-Clique} mit Lösung $|M|$.
+                \item<6-> Konstruiere Komplementärgraph $G^c$.
+                \item<7-> $M$ ist nun Independent Set in $G^c$.
+                \item<8-> Rückrichtung analog.
+            \end{itemize}
+            \only<9->{
+                $\Rightarrow$ Damit ist \textsc{k-Independent-Set} \W[1]-hart.
+                Es gibt vermutlich keinen FPT-Algorithmus für das Problem.
+            }
+            \only<10->{
+                \\
+                Analog lässt sich auch \textsc{k-Independent-Set} $\propto_{FPT}$ \textsc{k-Clique} zeigen.
+            }
+        }
+    \end{overlayarea}
+\end{frame}
+
+\begin{frame}[t]{Ein ganz anderes Problem}
+    \begin{redblock}{Problem \textsc{k-Color}}
+        \begin{tabular}{r l}
+            \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$ \\
+            \textbf{Parameter}: & verfügbare Anzahl Farben $k$ \\
+            \textbf{Frage}: & Existiert Färbung $c: V \rightarrow \N$ mit $|c(V)| \leq k$ und $(u, v) \in E \Rightarrow c(u) \neq c(v)$?
+        \end{tabular}
+    \end{redblock}
+
+    \begin{overlayarea}{1\textwidth}{1\textheight}%
+        \onslide*<2>{%
+            \centering%
+            \begin{figure}%
+                \includegraphics{images/color-1.eps}%
+            \end{figure}%
+            (\textbf{hier:} $k = 3$)%
+        }%
+        \onslide*<3>{%
+            \centering%
+            \begin{figure}%
+                \includegraphics{images/color-2.eps}%
+            \end{figure}%
+            (\textbf{hier:} $k = 3$)%
+        }%
         \onslide*<4>{
             \vspace{30pt}
             \questionbox{
@@ -677,7 +823,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         }
         \onslide*<6->{
             \begin{greenblock}{Nicht-Existenz eines FPT-Algorithmus für \textsc{k-Color}}
-                Für das Problem \textsc{k-Color} mit $k \geq 3$ exisitiert kein FPT-Algorithmus.
+                Für das Problem \textsc{k-Color} mit $k \geq 3$ existiert kein FPT-Algorithmus.
             \end{greenblock}
             \onslide*<7->{
                 \begin{columns}
@@ -688,14 +834,14 @@ overlay={\node[xshift=-30pt] at (frame.east)
                                 \begin{itemize}
                                     \item<8-11> Angenommen, es ex. FPT-Algorithmus $\mathcal{A}$ für \textsc{k-Color}.
                                     \item<9-11> Dann lässt sich \textsc{3-Color} in \BigO{\blue{f(3)} \cdot \textcolor{kit-red100}{|x|^c}} = \BigO{\textcolor{kit-red100}{|x|^c}} lösen.
-                                    \item<10-11> Damit exisitiert ein polynomieller Algorithmus für \textsc{3-Color}.
+                                    \item<10-11> Damit existiert ein polynomieller Algorithmus für \textsc{3-Color}.
                                     \item<11> Aus der \NP-Vollständigkeit von \textsc{3-Color} folgt $\P = \NP$. \large\textcolor{red}{\lightning}
                                 \end{itemize}
                             }
                             \onslide*<12->{
                                 \begin{minipage}{0.9\textwidth}
                                     \begin{blueblock}{\ParaNP-Härte}
-                                        Ein parametrisiertes Problem P ist \ParaNP-hart, wenn für beliebigen aber festen Parameter $k$ das Problem $P_k = \{x | (x, k) \in P\}$ \NP-hart ist.
+                                        Ein parametrisiertes Problem P ist \blue{\ParaNP-hart}, wenn für beliebigen aber festen Parameter $k$ das Problem \blue{$P_k := \{x | (x, k) \in P\}$} \NP-hart ist.
                                     \end{blueblock}
                                 \end{minipage}
                             }
@@ -722,35 +868,202 @@ overlay={\node[xshift=-30pt] at (frame.east)
         Die Menge aller solcher Probleme bildet die Problemklasse \blue{\XP}.
     \end{blueblock}
     \begin{itemize}
-        \item Mehr dazu nächste Woche von Nikola.
-        \item Offensichtlich: $\FPT \neq \XP$.
-        \\$\Rightarrow$ NP-Härte reicht nicht aus, um zwischen \FPT und \XP zu unterscheiden.
-        \item Neuer Härte-Begriff erforderlich: \textbf{W[1]-Härte}
+        \item \red{$\W[1] \subseteq \XP$}.
+        \item \textsc{k-Color} ist in \ParaNP aber nicht in \XP.
+        \item Außerdem sehen wir: \NP-Härte reicht nicht aus, um zwischen \W[1] und \FPT zu unterscheiden.
     \end{itemize}
 \end{frame}
 
-\begin{frame}{W[1]-Härte}
-    
+\begin{frame}{Ein Zoo an Komplexitätsklassen}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \begin{figure}
+                \copyrightbox[b]{\includegraphics[scale = 0.7]{images/complexity_classes.eps}}{\textcopyright \xspace Fschwarzentruber (bearbeitet), CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            Unter der Annahme:
+            \begin{itemize}
+                \item $P \neq NP$
+                \item $\FPT \subsetneq \W[1] \subsetneq \dots \subsetneq \W[P] \subsetneq \XP$.
+            \end{itemize}
+            mehr dazu: \cite{DowneyFellows}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}[t]{Parametrisierte Reduktionen}
-    \begin{blueblock}{Parametrisierte Reduktion}
-        Seien $P_1, P_2 \in \Sigma^* \times \N$ zwei parametrisierte Probleme.
-        \\
-        Eine Funktion $f: \Sigma^* \times \N \rightarrow \Sigma^* \times \N$ heißt genau dann \blue{Parametrisierte Reduktion von $P_1$ nach $P_2$} wenn
-        für $(x, k) \in \Sigma^* \times \N$ gilt:
+\begin{frame}[t]{ETH \& SETH}
+    \begin{itemize}
+        \item Unbewiesene Hypothesen für die Laufzeit von Algorithmen.
+        \item Ermöglichen untere Schranken an die Laufzeit von Algorithmen.
+        \item viele State-of-the-Art Algorithmen erfüllen diese Schranken.
+    \end{itemize}
+
+    \visible<2->{
+        \begin{redblock}{Problem \textsc{p-CNF-SAT}}
+            \begin{tabular}{r l}
+                \textbf{Eingabe}: & Variablenmenge $V$, Klauselmenge $C$ über maximal $p$ Literalen.\\
+                \textbf{Parameter}: & Maximale Anzahl Literale $p$ in jeder Klausel. \\
+                \textbf{Frage}: & Existiert eine simultan alle Klauseln erfüllende Wahrheitsbelegung?
+            \end{tabular}
+        \end{redblock}
+    }
+
+    \visible<3->{
+        \begin{cyanblock}{Exponential-Time Hypothesis (ETH)}
+            3-CNF-SAT lässt sich nicht in \BigO{2^{o(|V|)}} lösen.
+        \end{cyanblock}
+
+        \setbeamercovered{dynamic}
+        \uncover<3>{
+            \begin{cyanblock}{Strong Exponential-Time Hypothesis (SETH)}
+                Für jedes feste $\epsilon < 1$ existiert $p = p(\epsilon)$ sodass
+                p-CNF-SAT sicht nicht in \BigO{(2 - \epsilon)^{|V|}} lösen lässt.
+            \end{cyanblock}
+        }
+        \setbeamercovered{transparent}
+        \only<4>{} % Cover SETH
+    }
+\end{frame}
+
+\begin{frame}[t]{ETH - praktische Anwendung}
+    \vspace{-10pt}
+    \begin{overlayarea}{1\textwidth}{1\textheight}
+        \onslide*<2-9>{
+            \vspace{-10pt}
+            \begin{greenblock}{Satz (Sipser 1996)}
+                \textsc{3-CNF-SAT} lässt sich auf \textsc{Vertx-Cover} reduzieren.
+                Aus einer \textsc{3-CNF-SAT}-Instanz $(V, C)$ wird die \textsc{Vertex-Cover}-Instanz $(G, k)$.
+                Es gilt:
+                \begin{itemize}
+                    \item $|V(G)| = 3 \cdot |C|$
+                    \item $k \leq |V(G)|$
+                \end{itemize}
+            \end{greenblock}
+
+            \onslide*<3-9>{
+                \tikz[overlay, remember picture] \node[xshift=-40mm, yshift=-40mm] at (current page.north east) {
+                        \textbf{\red{\underline{Vorsicht:}}} \red{\textbf{Hier ist nichts parametrisiert!}}
+                };
+            }
+        }
+
+        \vspace{-10pt}
+        \onslide*<4-9>{
+            \raggedright
+            \textbf{Zu zeigen:} Es existiert kein Algorithmus für \textsc{Vertex-Cover} mit Laufzeit \BigO{2^{o(|V(G)^{1/3}|)}} \\ \qquad \quad \xspace \qquad unter Annahme der ETH.
+        }
+        \onslide*<5-9>{
+            \\
+            \textbf{Beweis:}
+        }
         \begin{itemize}
-            \item $I:=(x, k) \in P_1 \iff (x', k') := f(I) \in P_2$
-            \item $k' \leq g(k)$ für beliebige berechenbare Funktion $g: \N \rightarrow \N$
-            \item $f$ ist berechenbar und die Laufzeit ist in FPT.
+            \item<5-9> Angenommen es existiert ein solcher Algorithmus $\mathcal{A}$ für \textsc{Vertex-Cover}.
+            \item<6-9> Reduziere eine \textsc{3-CNF-SAT}-Instanz und lasse $\mathcal{A}$ diese lösen.
+            \item<7-9> Es ergibt sich im Widerspruch zur ETH die Laufzeit
         \end{itemize}
-        \vspace{10pt}
-        Wir schreiben $P_1 \prec_{FPT} P_2$.
+        \centering
+        \onslide*<8-9>{
+            \vspace{8pt}
+            \large{
+                $2^{o(|V(G)|^{1/3})} \leq 2^{o((3|C|)^{1/3})} \leq 2^{o(|V|)}$.
+            }
+            \\
+            \vspace{10pt}
+        }%
+
+        \onslide*<9>{
+            \tikz[overlay, remember picture] \node[xshift=10mm, yshift=-75mm] at (current page.north east) {
+                \begin{minipage}{250pt}
+                    \note{
+                        \textbf{$|C| \in \BigO{|V|^3}$}
+                    }
+                \end{minipage}
+            };
+        }%
+        \vspace{-43pt}
+        \onslide*<10-16>{%
+            \begin{greenblock}{Satz (Impaglioazzo et al. 2001)}
+                Unter Annahme der ETH hat \textsc{3-CNF-SAT} keinen Algorithmus
+                mit Laufzeit $\BigO{2^{o(|V|+|C|)}}$.
+            \end{greenblock}
+            \raggedright
+            \onslide*<11-14>{
+                \textbf{Folgerung:}
+                \\
+                \textsc{Vertex-Cover} hat keinen Algorithmus mit Laufzeit \BigO{2^{o(|V(G|))}}.
+                \\
+            }
+            \onslide*<12-14>{
+                \textbf{Beweis:}
+                \begin{itemize}
+                    \item<12-14> Angenommen es existiert ein solcher Algorithmus $\mathcal{A}$ für \textsc{Vertex-Cover}.
+                    \item<13-14> Reduziere eine \textsc{3-CNF-SAT}-Instanz und lasse $\mathcal{A}$ die Instanz lösen.
+                    \item<14-14> Es ergibt sich im Widerspruch zur ETH die Laufzeit
+                \end{itemize}
+                \onslide*<14>{
+                    \vspace{10pt}
+                    \centering
+                    $\BigO{2^{o(|V(G)|)}} = \BigO{2^{o(3|C|)}} = \BigO{2^{o(|C|)}} \preceq \BigO{2^{o(|V| + |C|)}}$.
+                }
+            }
+        }
+        \onslide*<15->{
+            \raggedright
+            \textbf{Folgerung:}
+            \\
+            \textsc{k-Vertex-Cover} hat keinen Algorithmus mit Laufzeit \BigO{2^{o(k)} \cdot |V(G)|^{c}} für $c \in \N$.
+            \\
+            \onslide*<16>{
+                \textbf{Beweis:}
+                \\
+                $2^{o(k)} \cdot |V(G)|^{c} \preceq 2^{o(|V(G)|)} \cdot |V(G)|^{c} \preceq 2^{o(|V(G)|)} \cdot 2^{|V(G)|} \preceq 2^{o(|V(G)|)} \preceq 2^{o(|V(G)| + |C|)}$.
+            }
+        }
+    \end{overlayarea}
+\end{frame}
+
+\begin{frame}{ETH - Verallgemeinerungen}
+    \begin{blueblock}{}
+        \textbf{Für \red{nicht parametrisierte} Probleme}
+        \\
+        Um zu zeigen, dass ein Problem keinen Algorithmus $\mathcal{A}$
+        mit Laufzeit in \BigO{2^{o(f(|x|))}} besitzt, finde Reduktion von \textsc{3-CNF-SAT}-Instanz $(V, C)$ sodass
+        $|x| \in \BigO{f^{-1}(|V| + |C|)}$.
+    \end{blueblock}
+
+    \begin{blueblock}{}
+        \textbf{Für \blue{parametrisierte} Probleme}
+        \\
+        Um zu zeigen, dass ein Problem keinen \textbf{parametrisierten} Algorithmus $\mathcal{A}$
+        mit Laufzeit in \BigO{\blue{2^{o(f(\textbf{k}))}} \cdot \red{|x|^c}} besitzt, finde \textbf{parametrisierte} Reduktion von \textsc{3-CNF-SAT}-Instanz $(V, C)$ sodass
+        $k \in \BigO{f^{-1}(|V| + |C|)}$.
     \end{blueblock}
 \end{frame}
 
-\begin{frame}{Parametrisierte Reduktionen - Beispiel}
-    
+\begin{frame}{Ein paar offene Fragen}
+    \begin{itemize}
+        \item Wie wählen wir den Parameter?
+        \item Warum ist der Problemkern jetzt genau schwer?
+        \item Approximation parametrisierter Probleme?
+        \item \W[1] lässt sich zur sog. \W-Hierarchie erweitern: $\W[1] \subseteq \W[2] \subseteq \dots $
+        \item Echtheit der \W-Hierarchie: $\W[1] \stackrel{?}{=} \W[2] \stackrel{?}{=} \dots $
+        \item $\FPT \stackrel{?}{=} \W[1]$
+        \only<1>{\item $\FPT \stackrel{?}{=} \XP$}
+        \only<2>{\item $\FPT \quad \red{\subsetneq} \quad \XP$ (siehe \cite{Fundamentals})}
+        \item $\FPT \stackrel{?}{=} \ParaNP $ (dann \P = \NP)
+        \item gelten ETH \& SETH? (dann $\P \neq \NP$)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Vielen Dank!}
+    \centering
+    \includegraphics[width=350pt]{images/xkcd.png}
+\end{frame}
+
+\begin{frame}{Verwendete Literatur}
+    \nocite{*}
+    \printbibliography
 \end{frame}
 
 \end{document} 
