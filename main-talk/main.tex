@@ -149,7 +149,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
 \begin{frame}{Parametrisiertes Problem}
 
     \begin{blueblock}{Parametrisiertes Problem}
-        Ein \blue{parametrisiertes Problem} ist eine Sprache $ L \subseteq \Sigma^* \times \blue{\N} $ wobei $\Sigma$ ein endliches Alphabet ist.
+        Ein \blue{parametrisiertes Problem} ist eine Sprache $ L \subseteq \Sigma^* \times \blue{\N} $, wobei $\Sigma$ ein endliches Alphabet ist.
         \\
         Die zweite Komponente heißt \blue{Parameter}.
     \end{blueblock}
@@ -163,13 +163,13 @@ overlay={\node[xshift=-30pt] at (frame.east)
              \hline
              Problem & Parameter \\
              \hline
-             \textsc{k-Vertex-Cover} & k \\
+             k-\textsc{Vertex-Cover} & k \\
              \hline
-             \textsc{Subset Sum} & Summe aller Elemente \\
+             \textsc{Subset-Sum} & Summe aller Elemente \\
              \hline
              \textsc{3Color} & größte Cliquengröße \\
              \hline
-             \textsc{k-Vertex-cover} &  $min_{v \in V(G)}{deg(v)}$ \\
+             k-\textsc{Vertex-cover} &  $min_{v \in V(G)}{deg(v)}$ \\
              \hline
             \end{tabular}
         \end{center}
@@ -214,7 +214,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
 
 
 \begin{frame}[t]{Ein \NP-schweres Problem: \textsc{Vertex-Cover}}
-    \begin{redblock}{Problem \textsc{k-Vertex-Cover}}
+    \begin{redblock}{Problem k-\textsc{Vertex-Cover}}
         \begin{tabular}{r l}
             \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$\\
             \textbf{Parameter}: & Lösungsgröße $k$ \\
@@ -287,15 +287,6 @@ overlay={\node[xshift=-30pt] at (frame.east)
                 Isolierte Knoten können vernachlässigt werden.
             }
         }%
-        \onslide*<4->{%
-            \begin{lightgreenblock}{1. Reduktionsregel}
-                Ist $(G, k)$ eine \textsc{k-Vertex-Cover} Instanz mit Parameter $k$ und $U$ die Menge der isolierten Knoten in G, \\ so ist $(G-U, k)$ eine äquivalente Instanz.
-            \end{lightgreenblock}
-        }%
-        \onslide*<5->{%
-            \textbf{Beweis:} Da isolierte Knoten mit keiner Kante verbunden sind,
-            tragen sie nicht zur Kantenabdeckung bei.
-        }%
     \end{overlayarea}%
     \visible<2->{%
         \tikz[overlay, remember picture] \node[xshift=-28mm, yshift=-14mm] at (current page.north east) {
@@ -317,8 +308,8 @@ overlay={\node[xshift=-30pt] at (frame.east)
             \onslide*<2->{%
                 \includegraphics[width=200pt]{images/vertex-cover-4.eps}%
             }%
-        \end{figure}
-        (\textbf{hier:} $k = 4$)
+        \end{figure}%
+        (\textbf{hier:} $k = 4$)%
         \vspace{5pt}
         \onslide*<1>{%
             \questionbox{
@@ -332,32 +323,6 @@ overlay={\node[xshift=-30pt] at (frame.east)
                 Wenn ein Knoten Grad mindestesns $k+1$ hat, ist er im Vertex Cover enthalten.    
             }
         }%
-        \onslide*<3->{%
-            \begin{lightgreenblock}{2. Reduktionsregel}
-                Ist $(G, k)$ eine \textsc{k-Vertex-Cover} Instanz mit Parameter $k$ und $v \in V(G)$ Knoten mit $deg(v) \geq k+1$, so ist $(G-v, k-1)$ eine äquivalente Instanz.
-            \end{lightgreenblock}
-        }%
-        \onslide*<4>{%
-            \raggedright
-            \textbf{Beweis:}
-            \\
-            \enquote{$\Rightarrow$}:
-            \\
-            Sei G eine Ja-Instanz mit Vertex Cover $M$.
-            \\
-            G-v hat das Vertex Cover $M' = M\setminus{\{v\}}$. $|M'| = |M| - |\{v\}| \leq k - |\{v\}| = k - 1$.
-        }%
-        \onslide*<5->{
-            \raggedright
-            \textbf{Beweis:}
-            \\
-            \enquote{$\Leftarrow$}:
-            \\
-            Sei $G-v$ eine Ja-Instanz mit Vertex Cover $M'$.
-            Wird $v$ hinzugefügt, deckt $v$ alle neuen Kanten ab.
-            \\
-            G hat Vertex Cover $M = M' \cup \{v\}$.
-    }
     \end{overlayarea}%
     \visible<1->{
         \tikz[overlay, remember picture] \node[xshift=-28mm, yshift=-14mm] at (current page.north east) {
@@ -396,8 +361,13 @@ overlay={\node[xshift=-30pt] at (frame.east)
             \onslide*<5->{%
                 \includegraphics[width=200pt]{images/vertex-cover-9.eps}%
             }%
-        \end{figure}
-        (\textbf{hier:} $k = 4$)
+        \end{figure}%
+        \only<1-4>{%
+            (\textbf{hier:} $k = 3$)%
+        }%
+        \only<5->{%
+            (\textbf{hier:} $k = 2$)%
+        }%
         \vspace{5pt}
         \onslide*<1-5>{%
             \questionbox{
@@ -410,18 +380,6 @@ overlay={\node[xshift=-30pt] at (frame.east)
                 \centering
                 Hat der Graph nach erschöpfender Anwendung von Regel 2 mehr als $k^2$ Kanten, ist $(G, k)$ eine Nein-Instanz.
             }
-        }%
-        \onslide*<7->{%
-            \begin{lightgreenblock}{3. Reduktionsregel}
-                Ist $(G, k)$ eine \textsc{k-Vertex-Cover} Instanz mit $deg(v) \leq k$ für alle $v \in V(G)$ und $|E(G)| > k^2$, ist $(G, k)$ eine Nein-Instanz.
-                Gib in diesem Fall eine triviale Nein-Instanz zurück.
-            \end{lightgreenblock}
-        }%
-        \onslide*<8->{%
-            \raggedright
-            \textbf{Beweis:}
-            \\
-            Vertex Cover $M$ von $k$ Knoten kann maximal $\displaystyle\sum_{v \in M}^{}{deg(v)} \leq \sum_{v \in M}^{}{k} = k \cdot k = k^2$ abdecken.
         }%
     \end{overlayarea}%
     \visible<1->{
@@ -449,13 +407,13 @@ overlay={\node[xshift=-30pt] at (frame.east)
 
 \begin{frame}[t]{Ein Problemkern für \textsc{Vertex-Cover}}
     \begin{greenblock}{Satz}
-        Eine \textsc{k-Vertex-Cover} Instanz (G, k) reduziert sich nach erschöpfender Anwendung\\ der Reduktionsregeln 1 - 3 auf eine Größe in \BigO{k^2}.
+        Eine k-\textsc{Vertex-Cover} Instanz (G, k) reduziert sich nach erschöpfender Anwendung\\ der Reduktionsregeln 1 - 3 auf eine Größe in \BigO{k^2}.
     \end{greenblock}
     \visible<2->{
         \raggedright
         \textbf{Beweis:}
         \\
-        Sei $\tilde{G}$ der Graph, der aus einer \textsc{k-Vertex-Cover} Instanz $(G, k)$ nach erschöpfender Anwendung der Reduktionsregeln 1-3 entstanden ist.
+        Sei $\tilde{G}$ der Graph, der aus einer k-\textsc{Vertex-Cover} Instanz $(G, k)$ nach erschöpfender Anwendung der Reduktionsregeln 1-3 entstanden ist.
         \\
         \visible<3->{
             Zu zeigen: $|V(\tilde{G})|, |E(\tilde{G})| \in \BigO{k^2}$
@@ -505,9 +463,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \begin{blueblock}{Problemkern \& Problemkernreduktion}
             Sei $ P \subseteq \Sigma^* \times \N $ ein parametrisiertes Problem.
             \\
-            Es bezeichne $|I|$ die (Eingabe-)Größe einer Probleminstanz $I := (x, k) \in \Sigma^* \times \N$.
-            \\
-            Eine \blue{Problemkernreduktion} $ \blue{\Phi: \Sigma^* \times \N \rightarrow \Sigma^* \times \N }$ ist eine Funktion sodass:
+            Eine \blue{Problemkernreduktion} $ \blue{\Phi: \Sigma^* \times \N \rightarrow \Sigma^* \times \N }$ ist eine Funktion, sodass:
             \begin{itemize}
                 \item $I \in P \iff I' := \blue{\Phi(I)} \in P $
                 \item $|I'| \leq f(k)$ für eine beliebige Funktion $f: \N \rightarrow \N$
@@ -584,7 +540,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         $\Leftarrow$:
             \\
             \visible<11->{
-                Es sei $(x, k)$ eine Instanz eines \FPT-Problems P.
+                Es sei $(x, k)$ eine Instanz eines FPT-Problems P.
             }
             \\
             \vspace{8pt}
@@ -659,7 +615,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
     \begin{blueblock}{Parametrisierte Reduktion}
         Seien $P_1, P_2 \in \Sigma^* \times \N$ zwei parametrisierte Probleme.
         \\
-        Eine Funktion $f: \Sigma^* \times \N \rightarrow \Sigma^* \times \N$ heißt genau dann \blue{Parametrisierte Reduktion von $P_1$ nach $P_2$} wenn
+        Eine Funktion $f: \Sigma^* \times \N \rightarrow \Sigma^* \times \N$ heißt \blue{parametrisierte Reduktion von $P_1$ nach $P_2$}, wenn
         für $(x, k) \in \Sigma^* \times \N$ gilt:
         \begin{itemize}
             \item $I:=(x, k) \in P_1 \iff (x', k') := f(I) \in P_2$
@@ -667,14 +623,14 @@ overlay={\node[xshift=-30pt] at (frame.east)
             \item $f$ ist berechenbar und die Laufzeit ist in FPT.
         \end{itemize}
         \vspace{10pt}
-        Wir schreiben $P_1 \propto_{FPT} P_2$.
+        Wir schreiben $P_1 \space \blue{\propto_{FPT}} \space P_2$.
     \end{blueblock}
 \end{frame}
 
 \begin{frame}[t]{Ein Problem das vermutlich nicht in \FPT ist}
     \vspace{-5pt}
     \visible<2->{
-        \begin{redblock}{Problem \textsc{k-Clique}}
+        \begin{redblock}{Problem k-\textsc{Clique}}
             \begin{tabular}{r l}
                 \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$\\
                 \textbf{Parameter}: & Lösungsgröße $k$ der Clique.\\
@@ -688,18 +644,18 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \begin{columns}
             \begin{column}{0.65\textwidth}
                 \begin{itemize}
-                    \item<3-> Es ist kein Algorithmus bekannt, der \textsc{k-Clique}
+                    \item<3-> Es ist kein Algorithmus bekannt, der k-\textsc{Clique}
                     in FPT-Zeit löst.
-                    \item<4-> Wir vermuten, dass \textsc{k-Clique} \enquote{parametrisiert schwerer} als FPT-Probleme wie z.B. \textsc{k-Vertex-Cover} ist.
-                    \item<5-> Wir bezeichnen \textsc{k-Clique} als \blue{\W[1]-hart} und \textbf{wir} definieren:
+                    \item<4-> Wir vermuten, dass k-\textsc{Clique} \enquote{parametrisiert schwerer} als FPT-Probleme wie z.B. \textsc{k-Vertex-Cover} ist.
+                    \item<5-> Wir bezeichnen k-\textsc{Clique} als \blue{\W[1]-hart} und definieren:
                 \end{itemize}
                 \vspace{-5pt}
                 \onslide<6->{
                     \begin{blueblock}{Problemklasse \W[1] \& \W[1]-Härte}
-                        Ein parametrisiertes Problem P ist genau dann in der \blue{Problemklasse \\\W[1]}, wenn es parametrisiert reduzierbar auf \textsc{k-Clique ist.}
+                        Ein parametrisiertes Problem P ist genau dann in der \blue{Problemklasse \\\W[1]}, wenn es parametrisiert reduzierbar auf k-\textsc{Clique} ist.
                         \vspace{8pt}
                         \\
-                        $P$ ist \blue{$\W[1]$-hart} gdw. für \only<6>{alle $P' \in \W[1]$} \only<7->{\red{ein \W[1]-hartes $P'$}} gilt: $P' \propto_{FPT} P$.
+                        $P$ ist \blue{$\W[1]$-hart} gdw. für \only<6>{alle $P' \in \W[1]$}\only<7->{\red{ein \W[1]-hartes $P'$}} gilt: $P' \propto_{FPT} P$.
                     \end{blueblock}
                 }
             \end{column}
@@ -711,20 +667,13 @@ overlay={\node[xshift=-30pt] at (frame.east)
                         (\textbf{hier:} $k = 4$)
                     \end{figure}
                 }
-                \onslide*<8->{
-                    \textbf{\red{Vorsicht:}}
-                    \\Die Definition von \\\W[1] und \W[1]-Härte
-                    ist in der Literatur anders, aber \textbf{äquivalent}!
-                    \\
-                    (statt \textsc{k-Clique} \textsc{Weighted Circuit Satisfiability})
-                }
             \end{column}
         \end{columns}
     \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t]{Beispiel: \textsc{k-Clique} $\propto_{FPT}$ \textsc{k-Independent-Set}}
-    \begin{redblock}{Problem \textsc{k-Independent-Set}}
+\begin{frame}[t]{Beispiel: k-\textsc{Clique} $\propto_{FPT}$ k-\textsc{Independent-Set}}
+    \begin{redblock}{Problem k-\textsc{Independent-Set}}
         \begin{tabular}{r l}
             \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$ \\
             \textbf{Parameter}: & Lösungsgröße $k$ \\
@@ -733,11 +682,20 @@ overlay={\node[xshift=-30pt] at (frame.east)
     \end{redblock}
 
     \vspace{10pt}
-    \only<1-3>{
-        \begin{figure}
-            \includegraphics{images/independent-set.eps}
-        \end{figure}
-    }
+        \only<1-3>{
+            \begin{overlayarea}{1\textwidth}{50pt}
+                \onslide*<1-3>{
+                    \begin{figure}
+                        \only<1-2>{%
+                            \includegraphics{images/independent-set.eps}%
+                        }%
+                        \only<3>{%
+                            \includegraphics{images/independent-set2.eps}%
+                        }%
+                    \end{figure}
+                }
+            \end{overlayarea}   
+        }         
 
     \tikz[overlay, remember picture] \node[xshift=29mm, yshift=-53mm] at (current page.north east) {
         \begin{minipage}{520pt}
@@ -758,139 +716,105 @@ overlay={\node[xshift=-30pt] at (frame.east)
 
     \begin{overlayarea}{1\textwidth}{1\textheight}
         \onslide*<2>{
-            \questionbox{Wie lässt sich \textsc{k-Clique} auf \textsc{k-Independent-Set} parametrisiert reduzieren?}
+            \questionbox{Wie lässt sich k-\textsc{Clique} auf k-\textsc{Independent-Set} parametrisiert reduzieren?}
         }
         \onslide*<3>{
             \answerbox{Betrachte den Komplementärgraph $G^c$}
         }
         \onslide*<4->{
             \vspace{-30pt}
-            \textbf{Zu zeigen:} \textsc{k-Clique} $\propto_{FPT}$ \textsc{k-Independent-Set}
+            \textbf{Zu zeigen:} k-\textsc{Clique} $\propto_{FPT}$ k-\textsc{Independent-Set}
             \begin{itemize}
-                \item<5-> Sei $I := (x, k)$ Ja-Instanz von \textsc{k-Clique} mit Lösung $|M|$.
+                \item<5-> Sei $I := (x, k)$ Ja-Instanz von k-\textsc{Clique} mit Lösung $|M|$.
                 \item<6-> Konstruiere Komplementärgraph $G^c$.
                 \item<7-> $M$ ist nun Independent Set in $G^c$.
                 \item<8-> Rückrichtung analog.
             \end{itemize}
             \only<9->{
-                $\Rightarrow$ Damit ist \textsc{k-Independent-Set} \W[1]-hart.
+                $\Rightarrow$ Damit ist k-\textsc{Independent-Set} \W[1]-hart.
                 Es gibt vermutlich keinen FPT-Algorithmus für das Problem.
             }
             \only<10->{
                 \\
-                Analog lässt sich auch \textsc{k-Independent-Set} $\propto_{FPT}$ \textsc{k-Clique} zeigen.
+                Analog lässt sich auch k-\textsc{Independent-Set} $\propto_{FPT}$ k-\textsc{Clique} zeigen.
             }
         }
     \end{overlayarea}
 \end{frame}
 
-\begin{frame}[t]{Ein ganz anderes Problem}
-    \begin{redblock}{Problem \textsc{k-Color}}
-        \begin{tabular}{r l}
-            \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \mathbb{N}$ \\
-            \textbf{Parameter}: & verfügbare Anzahl Farben $k$ \\
-            \textbf{Frage}: & Existiert Färbung $c: V \rightarrow \N$ mit $|c(V)| \leq k$ und $(u, v) \in E \Rightarrow c(u) \neq c(v)$?
-        \end{tabular}
-    \end{redblock}
-
-    \begin{overlayarea}{1\textwidth}{1\textheight}%
-        \onslide*<2>{%
-            \centering%
-            \begin{figure}%
-                \includegraphics{images/color-1.eps}%
-            \end{figure}%
-            (\textbf{hier:} $k = 3$)%
-        }%
-        \onslide*<3>{%
-            \centering%
-            \begin{figure}%
-                \includegraphics{images/color-2.eps}%
-            \end{figure}%
-            (\textbf{hier:} $k = 3$)%
-        }%
-        \onslide*<4>{
-            \vspace{30pt}
-            \questionbox{
-                Zeige unter der Annahme $\P \neq \NP$, dass kein FPT-Algorithmus
-                für \textsc{k-Color} existiert.
-            }
-        }
-        \onslide*<5>{
-            \vspace{30pt}
-            \answerbox{
-                Wir nutzen die \NP-Vollständigkeit von \textsc{3-Color}.
-            }
-        }
-        \onslide*<6->{
-            \begin{greenblock}{Nicht-Existenz eines FPT-Algorithmus für \textsc{k-Color}}
-                Für das Problem \textsc{k-Color} mit $k \geq 3$ existiert kein FPT-Algorithmus.
-            \end{greenblock}
-            \onslide*<7->{
-                \begin{columns}
-                    \begin{column}{0.6\textwidth}
-                        \onslide*<7->{
-                            \onslide*<7-11>{
-                                \textbf{Beweis:}
-                                \begin{itemize}
-                                    \item<8-11> Angenommen, es ex. FPT-Algorithmus $\mathcal{A}$ für \textsc{k-Color}.
-                                    \item<9-11> Dann lässt sich \textsc{3-Color} in \BigO{\blue{f(3)} \cdot \textcolor{kit-red100}{|x|^c}} = \BigO{\textcolor{kit-red100}{|x|^c}} lösen.
-                                    \item<10-11> Damit existiert ein polynomieller Algorithmus für \textsc{3-Color}.
-                                    \item<11> Aus der \NP-Vollständigkeit von \textsc{3-Color} folgt $\P = \NP$. \large\textcolor{red}{\lightning}
-                                \end{itemize}
-                            }
-                            \onslide*<12->{
-                                \begin{minipage}{0.9\textwidth}
-                                    \begin{blueblock}{\ParaNP-Härte}
-                                        Ein parametrisiertes Problem P ist \blue{\ParaNP-hart}, wenn für beliebigen aber festen Parameter $k$ das Problem \blue{$P_k := \{x | (x, k) \in P\}$} \NP-hart ist.
-                                    \end{blueblock}
-                                \end{minipage}
-                            }
-                        }
-                    \end{column}
-                    \begin{column}{0.4\textwidth}
-                        \onslide*<13>{
-                            \large\textbf{\red{\underline{Aber:}}}
-                            Wir schließen nicht nur Laufzeiten in \BigO{\blue{f(k) \cdot \red{|x|^c}}} aus.
-                        }
-                    \end{column}
-                \end{columns}
-            }
-        }
-    \end{overlayarea}
-\end{frame}
-
-\begin{frame}[t]{Exkurs: Problemklasse \XP}
-    \begin{blueblock}{Problemklasse \XP}
-        Ein parametrisiertes \textbf{Entscheidungsproblem} heißt \blue{XP},
-        wenn ein Algorithmus existiert, der alle Probleminstanzen (x, k) in \BigO{\blue{f(k)} \cdot \textcolor{kit-red100}{|x|^{\textcolor{orange}{g(k)}}}} löst, wobei $ c \in \N $ und $f, \textcolor{orange}{g}$ beliebige berechenbare Funktionen sind.
-
-        \vspace{10pt}
-        Die Menge aller solcher Probleme bildet die Problemklasse \blue{\XP}.
-    \end{blueblock}
-    \begin{itemize}
-        \item \red{$\W[1] \subseteq \XP$}.
-        \item \textsc{k-Color} ist in \ParaNP aber nicht in \XP.
-        \item Außerdem sehen wir: \NP-Härte reicht nicht aus, um zwischen \W[1] und \FPT zu unterscheiden.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Ein Zoo an Komplexitätsklassen}
-    \begin{columns}
-        \begin{column}{0.6\textwidth}
-            \begin{figure}
-                \copyrightbox[b]{\includegraphics[scale = 0.7]{images/complexity_classes.eps}}{\textcopyright \xspace Fschwarzentruber (bearbeitet), CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons}
-            \end{figure}
-        \end{column}
-        \begin{column}{0.4\textwidth}
-            Unter der Annahme:
-            \begin{itemize}
-                \item $P \neq NP$
-                \item $\FPT \subsetneq \W[1] \subsetneq \dots \subsetneq \W[P] \subsetneq \XP$.
-            \end{itemize}
-            mehr dazu: \cite{DowneyFellows}
-        \end{column}
-    \end{columns}
-\end{frame}
+%\begin{frame}[t]{Ein ganz anderes Problem}
+%    \begin{redblock}{Problem k-\textsc{Color}}
+%        \begin{tabular}{r l}
+%            \textbf{Eingabe}: & Graph $G = (V, E)$, $k \in \N$ \\
+%            \textbf{Parameter}: & verfügbare Anzahl Farben $k$ \\
+%            \textbf{Frage}: & Existiert Färbung $c: V \rightarrow \N$ mit $|c(V)| \leq k$ und $(u, v) \in E \Rightarrow c(u) \neq c(v)$?
+%        \end{tabular}
+%    \end{redblock}
+%
+%    \begin{overlayarea}{1\textwidth}{1\textheight}%
+%        \onslide*<2>{%
+%            \centering%
+%            \begin{figure}%
+%                \includegraphics{images/color-1.eps}%
+%            \end{figure}%
+%            (\textbf{hier:} $k = 3$)%
+%        }%
+%        \onslide*<3>{%
+%            \centering%
+%            \begin{figure}%
+%                \includegraphics{images/color-2.eps}%
+%            \end{figure}%
+%            (\textbf{hier:} $k = 3$)%
+%        }%
+%        \onslide*<4>{
+%            \vspace{30pt}
+%            \questionbox{
+%                Zeige unter der Annahme $\P \neq \NP$, dass kein FPT-Algorithmus
+%                für k-\textsc{Color} existiert.
+%            }
+%        }
+%        \onslide*<5>{
+%            \vspace{30pt}
+%            \answerbox{
+%                Wir nutzen die \NP-Vollständigkeit von \textsc{3-Color}.
+%            }
+%        }
+%        \onslide*<6->{
+%            \begin{greenblock}{Nicht-Existenz eines FPT-Algorithmus für k-\textsc{Color}}
+%                Für das Problem k-\textsc{Color} mit $k \geq 3$ existiert kein FPT-Algorithmus.
+%            \end{greenblock}
+%            \onslide*<7->{
+%                \begin{columns}
+%                    \begin{column}{0.6\textwidth}
+%                        \onslide*<7->{
+%                            \onslide*<7-11>{
+%                                \textbf{Beweis:}
+%                                \begin{itemize}
+%                                    \item<8-11> Angenommen, es ex. FPT-Algorithmus $\mathcal{A}$ für k-\textsc{Color}.
+%                                    \item<9-11> Dann lässt sich 3-\textsc{Color} in \BigO{\blue{f(3)} \cdot \textcolor{kit-red100}{|x|^c}} = \BigO{\textcolor{kit-red100}{|x|^c}} lösen.
+%                                    \item<10-11> Damit existiert ein polynomieller Algorithmus für \textsc{3-Color}.
+%                                    \item<11> Aus der \NP-Vollständigkeit von 3-\textsc{Color} folgt $\P = \NP$. \large\textcolor{red}{\lightning}
+%                                \end{itemize}
+%                            }
+%                            \onslide*<12->{
+%                                \begin{minipage}{0.9\textwidth}
+%                                    \begin{blueblock}{\ParaNP-Härte}
+%                                        Ein parametrisiertes Problem P ist \blue{\ParaNP-hart}, wenn für beliebigen aber festen Parameter $k$ das Problem \blue{$P_k := \{x | (x, k) \in P\}$} \NP-hart ist.
+%                                    \end{blueblock}
+%                                \end{minipage}
+%                            }
+%                        }
+%                    \end{column}
+%                    \begin{column}{0.4\textwidth}
+%                        \onslide*<13>{
+%                            Für k-\textsc{Clique} existiert Algorithmus in \BigO{n^k} $\Rightarrow$ k-\textsc{Color} nicht in \W[1]!
+%                        }
+%                    \end{column}
+%                \end{columns}
+%            }
+%        }
+%    \end{overlayarea}
+%\end{frame}
 
 \begin{frame}[t]{ETH \& SETH}
     \begin{itemize}
@@ -900,25 +824,25 @@ overlay={\node[xshift=-30pt] at (frame.east)
     \end{itemize}
 
     \visible<2->{
-        \begin{redblock}{Problem \textsc{p-CNF-SAT}}
+        \begin{redblock}{Problem p-\textsc{CNF-SAT}}
             \begin{tabular}{r l}
-                \textbf{Eingabe}: & Variablenmenge $V$, Klauselmenge $C$ über maximal $p$ Literalen.\\
-                \textbf{Parameter}: & Maximale Anzahl Literale $p$ in jeder Klausel. \\
-                \textbf{Frage}: & Existiert eine simultan alle Klauseln erfüllende Wahrheitsbelegung?
+                \textbf{Eingabe}: & Variablenmenge $V$, Klauselmenge $C$\\
+                \textbf{Parameter}: & Maximale Anzahl Literale $p \in \N$ in jeder Klausel. \\
+                \textbf{Frage}: & Existiert eine erfüllende Wahrheitsbelegung?
             \end{tabular}
         \end{redblock}
     }
 
     \visible<3->{
         \begin{cyanblock}{Exponential-Time Hypothesis (ETH)}
-            3-CNF-SAT lässt sich nicht in \BigO{2^{o(|V|)}} lösen.
+            3-\textsc{CNF-SAT} lässt sich nicht in \BigO{2^{o(|V|)}} lösen.
         \end{cyanblock}
 
         \setbeamercovered{dynamic}
         \uncover<3>{
             \begin{cyanblock}{Strong Exponential-Time Hypothesis (SETH)}
                 Für jedes feste $\epsilon < 1$ existiert $p = p(\epsilon)$ sodass
-                p-CNF-SAT sicht nicht in \BigO{(2 - \epsilon)^{|V|}} lösen lässt.
+                p-\textsc{CNF-SAT} sicht nicht in \BigO{(2 - \epsilon)^{|V|}} lösen lässt.
             \end{cyanblock}
         }
         \setbeamercovered{transparent}
@@ -932,8 +856,8 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \onslide*<2-9>{
             \vspace{-10pt}
             \begin{greenblock}{Satz (Sipser 1996)}
-                \textsc{3-CNF-SAT} lässt sich auf \textsc{Vertx-Cover} reduzieren.
-                Aus einer \textsc{3-CNF-SAT}-Instanz $(V, C)$ wird die \textsc{Vertex-Cover}-Instanz $(G, k)$.
+                \textsc{3-\textsc{CNF-SAT}} lässt sich auf \textsc{Vertx-Cover} reduzieren.
+                Aus einer \textsc{3-\textsc{CNF-SAT}}-Instanz $(V, C)$ wird die \textsc{Vertex-Cover}-Instanz $(G, k)$.
                 Es gilt:
                 \begin{itemize}
                     \item $|V(G)| = 3 \cdot |C|$
@@ -959,7 +883,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         }
         \begin{itemize}
             \item<5-9> Angenommen es existiert ein solcher Algorithmus $\mathcal{A}$ für \textsc{Vertex-Cover}.
-            \item<6-9> Reduziere eine \textsc{3-CNF-SAT}-Instanz und lasse $\mathcal{A}$ diese lösen.
+            \item<6-9> Reduziere eine 3-\textsc{CNF-SAT}-Instanz und lasse $\mathcal{A}$ diese lösen.
             \item<7-9> Es ergibt sich im Widerspruch zur ETH die Laufzeit
         \end{itemize}
         \centering
@@ -984,7 +908,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \vspace{-43pt}
         \onslide*<10-16>{%
             \begin{greenblock}{Satz (Impaglioazzo et al. 2001)}
-                Unter Annahme der ETH hat \textsc{3-CNF-SAT} keinen Algorithmus
+                Unter Annahme der ETH hat 3-\textsc{CNF-SAT} keinen Algorithmus
                 mit Laufzeit $\BigO{2^{o(|V|+|C|)}}$.
             \end{greenblock}
             \raggedright
@@ -998,7 +922,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
                 \textbf{Beweis:}
                 \begin{itemize}
                     \item<12-14> Angenommen es existiert ein solcher Algorithmus $\mathcal{A}$ für \textsc{Vertex-Cover}.
-                    \item<13-14> Reduziere eine \textsc{3-CNF-SAT}-Instanz und lasse $\mathcal{A}$ die Instanz lösen.
+                    \item<13-14> Reduziere eine 3-\textsc{CNF-SAT}-Instanz und lasse $\mathcal{A}$ die Instanz lösen.
                     \item<14-14> Es ergibt sich im Widerspruch zur ETH die Laufzeit
                 \end{itemize}
                 \onslide*<14>{
@@ -1012,12 +936,12 @@ overlay={\node[xshift=-30pt] at (frame.east)
             \raggedright
             \textbf{Folgerung:}
             \\
-            \textsc{k-Vertex-Cover} hat keinen Algorithmus mit Laufzeit \BigO{2^{o(k)} \cdot |V(G)|^{c}} für $c \in \N$.
+            k-\textsc{Vertex-Cover} hat keinen Algorithmus mit Laufzeit \BigO{2^{o(k)} \cdot |V(G)|^{c}} für $c \in \N$.
             \\
             \onslide*<16>{
                 \textbf{Beweis:}
                 \\
-                $2^{o(k)} \cdot |V(G)|^{c} \preceq 2^{o(|V(G)|)} \cdot |V(G)|^{c} \preceq 2^{o(|V(G)|)} \cdot 2^{|V(G)|} \preceq 2^{o(|V(G)|)} \preceq 2^{o(|V(G)| + |C|)}$.
+                $2^{o(k)} \cdot |V(G)|^{c} \preceq 2^{o(|V(G)|)} \cdot |V(G)|^{c} \preceq 2^{o(|V(G)|)} \cdot 2^{|V(G)|} \preceq 2^{o(|V(G)|)} = 2^{o(|C|)} \preceq 2^{o(|V| + |C|)}$.
             }
         }
     \end{overlayarea}
@@ -1028,7 +952,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \textbf{Für \red{nicht parametrisierte} Probleme}
         \\
         Um zu zeigen, dass ein Problem keinen Algorithmus $\mathcal{A}$
-        mit Laufzeit in \BigO{2^{o(f(|x|))}} besitzt, finde Reduktion von \textsc{3-CNF-SAT}-Instanz $(V, C)$ sodass
+        mit Laufzeit in \BigO{2^{o(f(|x|))}} besitzt, finde Reduktion von 3-\textsc{CNF-SAT}-Instanz $(V, C)$ sodass
         $|x| \in \BigO{f^{-1}(|V| + |C|)}$.
     \end{blueblock}
 
@@ -1036,7 +960,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \textbf{Für \blue{parametrisierte} Probleme}
         \\
         Um zu zeigen, dass ein Problem keinen \textbf{parametrisierten} Algorithmus $\mathcal{A}$
-        mit Laufzeit in \BigO{\blue{2^{o(f(\textbf{k}))}} \cdot \red{|x|^c}} besitzt, finde \textbf{parametrisierte} Reduktion von \textsc{3-CNF-SAT}-Instanz $(V, C)$ sodass
+        mit Laufzeit in \BigO{\blue{2^{o(f(\textbf{k}))}} \cdot \red{|x|^c}} besitzt, finde \textbf{parametrisierte} Reduktion von 3-\textsc{CNF-SAT}-Instanz $(V, C)$ sodass
         $k \in \BigO{f^{-1}(|V| + |C|)}$.
     \end{blueblock}
 \end{frame}
@@ -1049,9 +973,7 @@ overlay={\node[xshift=-30pt] at (frame.east)
         \item \W[1] lässt sich zur sog. \W-Hierarchie erweitern: $\W[1] \subseteq \W[2] \subseteq \dots $
         \item Echtheit der \W-Hierarchie: $\W[1] \stackrel{?}{=} \W[2] \stackrel{?}{=} \dots $
         \item $\FPT \stackrel{?}{=} \W[1]$
-        \only<1>{\item $\FPT \stackrel{?}{=} \XP$}
-        \only<2>{\item $\FPT \quad \red{\subsetneq} \quad \XP$ (siehe \cite{Fundamentals})}
-        \item $\FPT \stackrel{?}{=} \ParaNP $ (dann \P = \NP)
+        %\item $\FPT \stackrel{?}{=} \ParaNP $ (dann \P = \NP)
         \item gelten ETH \& SETH? (dann $\P \neq \NP$)
     \end{itemize}
 \end{frame}
