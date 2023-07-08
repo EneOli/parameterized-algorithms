@@ -5,27 +5,30 @@
 @STRING{LNCS = {LNCS}}
 @STRING{DAM = {Discrete Applied Mathematics}}
 
-@book{Beyond,
+@inbook{Beyond,
   author         = {Tim Roughgarden (Hrsg.)},
   editor         = {Tim Roughgarden},
   publisher      = {Cambridge University Press},
   title          = {Beyond the Worst-Case Analysis of Algorithms},
-  year           = {2021}
+  year           = {2021},
+  pages          = {27 -- 42}
 }
 
-@book{DowneyFellows,
+@inbook{DowneyFellows,
   author         = {R.G. Downey and M.R. Fellows},
   editor         = {David Giers \& Fred B. Schneider},
   publisher      = {Springer-Verlag New York Berlin Heidelberg},
   title          = {Monographs in Computer Science - Parameterized Complexity},
-  year           = {1999}
+  year           = {1999},
+  pages          = {227 -- 250, 284}
 }
 
-@book{Parameterized,
+@inbook{Parameterized,
   author         = {Cygan et. al},
   publisher      = {Springer International Publishing Switzerland},
   title          = {Parameterized Algorithms},
-  year           = {2015}
+  year           = {2015},
+  pages          = {467 -- 477}
 }
 
 @book{Fundamentals,
@@ -36,51 +39,35 @@
   year           = {2013}
 }
 
-
-%% Referenz ist ein Artikel in einem Journal 
-%article{example1,
-%author = {Kako, Akihisa and Ono, Takao and Hirata, Tomio and Halld\'{o}rsson, Magn\'{u}s M},
-%journal = DAM,
-%number = {4},
-%pages = {617--626},
-%title = {{Approximation algorithms for the weighted independent set problem in sparse graphs}},
-%volume = {157},
-%year = {2009}
-%}
-
-%% Referenz ist ein Artikel in Proceedings 
-%inproceedings{example2,
-author = {Seibert, Sebastian and Unger, Walter},
-booktitle = {Algorithms and Complexity},
-pages = {102--112},
-publisher = SPRINGER,
-series = LNCS,
-title = {{The Hardness of Placing Street Names in a Manhattan Type
-Map}},
-volume = {1767},
-year = {2000}
+@inmisc{SETH,
+    author = {Karl Bringmann, Marvin Künneman},
+    title = {{(Strong) Exponential Time Hypothesis}},
+    howpublished={\url{
+    https://www.mpi-inf.mpg.de/fileadmin/inf/d1/teaching/summer19/finegrained/lec2.pdf}},
+    year = {2019},
+    pages = {2, 7 -- 10}
 }
 
-%% Referenz ist ein Artikel in Proceedings 
-%inproceedings{example3,
-%author = {Neyer, Gabriele and Wagner, Frank},
-%booktitle = {Algorithms and Complexity},
-%pages = {113--124},
-%publisher = SPRINGER,
-%series = LNCS,
-%title = {{Labeling Downtown}},
-%volume = {1767},
-%year = {2000}
-%}
+@article{impagliazzo,
+title = {Which Problems Have Strongly Exponential Complexity?},
+journal = {Journal of Computer and System Sciences},
+volume = {63},
+number = {4},
+pages = {512 -- 530},
+year = {2001},
+issn = {0022-0000},
+doi = {https://doi.org/10.1006/jcss.2001.1774},
+url = {https://www.sciencedirect.com/science/article/pii/S002200000191774X},
+author = {Russell Impagliazzo and Ramamohan Paturi and Francis Zane},
+abstract = {For several NP-complete problems, there have been a progression of better but still exponential algorithms. In this paper, we address the relative likelihood of sub-exponential algorithms for these problems. We introduce a generalized reduction that we call Sub-exponential Reduction Family (SERF) that preserves sub-exponential complexity. We show that Circuit-SAT is SERF-complete for all NP-search problems, and that for any fixed k⩾3, k-SAT, k-Colorability, k-Set Cover, Independent Set, Clique, and Vertex Cover, are SERF-complete for the class SNP of search problems expressible by second-order existential formulas whose first-order part is universal. In particular, sub-exponential complexity for any one of the above problems implies the same for all others. We also look at the issue of proving strongly exponential lower bounds for AC0, that is, bounds of the form 2Ω(n). This problem is even open for depth-3 circuits. In fact, such a bound for depth-3 circuits with even limited (at most nε) fan-in for bottom-level gates would imply a nonlinear size lower bound for logarithmic depth circuits. We show that with high probability even random degree 2 GF(2) polynomials require strongly exponential size for Σk3 circuits for k=o(loglogn). We thus exhibit a much smaller space of 2O(n2) functions such that almost every function in this class requires strongly exponential size Σk3 circuits. As a corollary, we derive a pseudorandom generator (requiring O(n2) bits of advice) that maps n bits into a larger number of bits so that computing parity on the range is hard for Σk3 circuits. Our main technical lemma is an algorithm that, for any fixed ε>0, represents an arbitrary k-CNF formula as a disjunction of 2εnk-CNF formulas that are sparse, that is, each disjunct has O(n) clauses.}
+}
 
-%% Referenz ist eine URL
-%misc{example4,
-%author = {Wolff, Alexander and Strijk, Tycho},
-%title = {{The Map Labeling Bibliography}},
-%howpublished={\url{
-%http://liinwww.ira.uka.de/bibliography/Theory/map.labeling.html}},
-%year = {2009}
-%}
-
-
-
+@article{sipser,
+author = {Michael Sipser},
+title = {Introduction to the Theory of Computation},
+year = {1996},
+publisher = {Thomson Course Technology},
+address = {New York, NY, USA},
+isbn = {0-534-95097-3},
+pages = {284-285}
+}
